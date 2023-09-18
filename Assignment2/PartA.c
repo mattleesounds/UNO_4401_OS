@@ -1,61 +1,66 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <stdlib.h>
+#include <string.h>
+
+typedef struct Process
+{
+  int ProcessID;
+  int ParentProcessID;
+} Process;
+
+void build_json(Process *list, int size, int parent_id, char *json_output)
+{
+  strcat(json_output, "[");
+  int first = 1;
+  for (int i = 0; i < size; i++)
+  {
+    if (list[i].ParentProcessID == parent_id)
+    {
+      if (first == 1)
+      {
+        first = 0;
+      }
+      else
+      {
+        strcat(json_output, ",");
+      }
+      strcat(json_output, "{\"ProcessID\": ");
+      char pid[10];
+      sprintf(pid, "%d", list[i].ProcessID);
+      strcat(json_output, pid);
+
+      strcat(json_output, ", \"ParentProcessID\": ");
+      char ppid[10];
+      sprintf(ppid, "%d", list[i].ParentProcessID);
+      strcat(json_output, ppid);
+
+      strcat(json_output, ", \"Children\": ");
+      build_json(list, size, list[i].ProcessID, json_output);
+      strcat(json_output, "}");
+    }
+  }
+  strcat(json_output, "]");
+}
 
 int main()
 {
-  int n, i;
-  pid_t *children; // Array to hold child process IDs
-  int status;
-  FILE *fp;
-
-  printf("Enter the value for n: ");
+  int n;
+  printf("Enter the number of processes: ");
   scanf("%d", &n);
 
-  children = malloc(n * sizeof(pid_t)); // Allocate memory for child process IDs
+  Process list[n];
 
-  for (i = 0; i < n; i++)
+  for (int i = 0; i < n; i++)
   {
-    pid_t pid = fork();
-    if (pid == 0)
-    {          // Child process
-      exit(0); // Child process exits immediately
-    }
-    else if (pid > 0)
-    {                    // Parent process
-      children[i] = pid; // Store child process ID
-    }
-    else
-    {
-      printf("Fork failed.\n");
-      return 1;
-    }
+    printf("Enter ProcessID and ParentProcessID for process %d: ", i + 1);
+    scanf("%d %d", &list[i].ProcessID, &list[i].ParentProcessID);
   }
 
-  // Open the file in the parent process after all forks are done
-  fp = fopen("output.json", "w");
-  fprintf(fp, "{\n  \"processes\": [\n");
+  char json_output[1024] = "";
+  int root_id = -1; // Assuming -1 is the root parent ID
+  build_json(list, n, root_id, json_output);
 
-  // Wait for each child and collect their data
-  for (i = 0; i < n; i++)
-  {
-    waitpid(children[i], &status, 0); // Wait for the specific child to terminate
-    fprintf(fp, "    {\"ProcessID\": %d, \"ParentProcessID\": %d}", children[i], getpid());
-    if (i < n - 1)
-    {
-      fprintf(fp, ",\n");
-    }
-    else
-    {
-      fprintf(fp, "\n");
-    }
-  }
-
-  fprintf(fp, "  ]\n}\n");
-  fclose(fp);     // Close the file
-  free(children); // Free the allocated memory for child process IDs
+  printf("JSON output: %s\n", json_output);
 
   return 0;
 }
