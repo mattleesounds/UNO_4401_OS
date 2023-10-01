@@ -9,21 +9,28 @@ void main()
   int i;
   int pid;
   int ppid;
+  pid_t proc;
 
-  FILE *file = fopen("tree.csv", "w");
-
-  /*  fprintf(file, "PID,ParentPID\n");
-   fprintf(file, "%d,%d\n", getpid(), getppid());
-
-   fclose(file); */
+  // Parent process writes after all forks.
+  pid = getpid();
+  ppid = getppid();
+  FILE *file = fopen("tree.csv", "a");
+  fprintf(file, "%d,%d\n", pid, ppid);
+  fclose(file);
 
   for (i = 0; i < n; i++)
   {
-    fork();
-    pid = getpid();
-    ppid = getppid();
-    file = fopen("tree.csv", "a");
-    fprintf(file, "%d,%d\n", pid, ppid);
-    fclose(file);
+    proc = fork();
+    if (proc == 0) // Child process
+    {
+      pid = getpid();
+      ppid = getppid();
+
+      FILE *file = fopen("tree.csv", "a");
+      fprintf(file, "%d,%d\n", pid, ppid);
+      fclose(file);
+
+      exit(0); // Important: exit child process after writing to the file.
+    }
   }
 }
