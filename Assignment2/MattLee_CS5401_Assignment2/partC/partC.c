@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main()
 {
@@ -9,24 +11,26 @@ int main()
 
   FILE *file = fopen("pids.csv", "w");
 
-  printf("Enter the value of n: ");
+  printf("Enter the number of forks: ");
   scanf("%d", &n);
 
   fprintf(file, "%d,%d\n", getpid(), getppid());
 
   for (int i = 1; i <= n; i++)
   {
-    // Flushing the file buffer avoids duplicate lines
     fflush(file);
     pid = fork();
 
-    // If pid is zero, process is a child
     if (pid == 0)
+    {
       fprintf(file, "%d,%d\n", getpid(), getppid());
+    }
+    else if (pid > 0)
+    {
+      waitpid(pid, NULL, 0);
+      break;
+    }
   }
-
-  // Sleep for 1 second to allow all processes to finish writing to the file
-  sleep(1);
 
   fclose(file);
 
