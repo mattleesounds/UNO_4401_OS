@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class PartC {
+public class PartB3 {
   public static void main(String[] args) throws Exception {
       Path dir = Paths.get("/Users/matthewlee/projects/UNO_4401_OS/os-assign3");
       long startTime = System.currentTimeMillis();

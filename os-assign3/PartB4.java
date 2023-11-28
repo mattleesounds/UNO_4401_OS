@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PartB2 {
+public class PartB4 {
  public static void main(String[] args) throws Exception {
      Path dir = Paths.get("/Users/matthewlee/projects/UNO_4401_OS/os-assign3");
      long startTime = System.currentTimeMillis();

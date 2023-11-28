@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class PartA {
+public class PartA1 {
    public static void main(String[] args) throws Exception {
        File file = new File("UFOReports.txt");
        FileReader fr = new FileReader(file);

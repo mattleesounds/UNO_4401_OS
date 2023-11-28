@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class PartB {
+public class PartA2 {
    public static void main(String[] args) throws Exception {
        File file = new File("UFOReports.txt");
        Thread thread = new Thread(() -> {
