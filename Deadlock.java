@@ -89,8 +89,6 @@ public class Deadlock {
     }
 }
 
-// Include other classes (Node, RAG, Graph, ResourceManager) as well
-
 class RAG {
     private Graph graph;
 
@@ -103,7 +101,7 @@ class RAG {
         Node processNode = new Node(processId, Node.NodeType.PROCESS);
         graph.addNode(resourceNode);
         graph.addNode(processNode);
-        graph.addEdge(resourceNode, processNode); // Resource to Process edge
+        graph.addEdge(resourceNode, processNode);
     }
 
     public void addAllocation(int processId, int resourceId) {
@@ -142,23 +140,19 @@ class Graph {
 
     public void addEdge(Node from, Node to) {
         adjacencyList.get(from).add(to);
-        // Uncomment for debugging: System.out.println("Debug: Edge added from " + from
-        // + " to " + to);
     }
 
     public void removeEdge(Node from, Node to) {
         List<Node> edges = adjacencyList.get(from);
         if (edges != null) {
             edges.remove(to);
-            // Uncomment for debugging: System.out.println("Debug: Edge removed from " +
-            // from + " to " + to);
         }
     }
 
     public List<Node> detectCycle() {
         List<Node> cycleNodes = new ArrayList<>();
-        visited.clear(); // Reset visited for fresh detection
-        recStack.clear(); // Reset recStack for fresh detection
+        visited.clear();
+        recStack.clear();
 
         for (Node node : adjacencyList.keySet()) {
             if (!visited.contains(node)) {
@@ -174,10 +168,10 @@ class Graph {
     private boolean detectCycleUtil(Node node, List<Node> cycleNodes) {
         if (recStack.contains(node)) {
             cycleNodes.add(node);
-            return true; // Cycle found
+            return true;
         }
         if (!visited.add(node)) {
-            return false; // Already visited, no cycle here
+            return false;
         }
 
         recStack.add(node);
@@ -186,7 +180,7 @@ class Graph {
         if (adjacencyList.containsKey(node)) {
             for (Node neighbor : adjacencyList.get(node)) {
                 if (detectCycleUtil(neighbor, cycleNodes)) {
-                    return true; // Cycle detected in a recursive call
+                    return true;
                 }
             }
         }
@@ -235,7 +229,7 @@ class Node {
 
     @Override
     public String toString() {
-        return type + " " + id; // Assuming you have a NodeType enum with PROCESS and RESOURCE
+        return type + " " + id;
     }
 }
 
