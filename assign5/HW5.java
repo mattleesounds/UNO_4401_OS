@@ -97,22 +97,22 @@ public class HW5 { // don't rename
 		int bestFitSize = Integer.MAX_VALUE;
 		int worstFitSize = 0;
 
-		for (int hole : memoryHoles) {
+		for (int memoryHole : memoryHoles) {
 			// ToDo: add your code to calculate @firstFit
-			if (firstFit == 0 && hole >= requestSize) {
-				firstFit = hole;
+			if (firstFit == 0 && memoryHole >= requestSize) {
+				firstFit = memoryHole;
 			}
 
 			// ToDo: add your code to calculate @bestFit
-			if (hole >= requestSize && hole < bestFitSize) {
-				bestFit = hole;
-				bestFitSize = hole;
+			if (memoryHole >= requestSize && memoryHole < bestFitSize) {
+				bestFit = memoryHole;
+				bestFitSize = memoryHole;
 			}
 
 			// ToDo: add your code to calculate @worsFit
-			if (hole >= requestSize && hole > worstFitSize) {
-				worstFit = hole;
-				worstFitSize = hole;
+			if (memoryHole >= requestSize && memoryHole > worstFitSize) {
+				worstFit = memoryHole;
+				worstFitSize = memoryHole;
 			}
 		}
 
@@ -204,8 +204,8 @@ public class HW5 { // don't rename
 			if (!pagesInMemory.contains(page)) {
 				faults++;
 				if (memory.size() == frames) {
-					int removed = memory.poll();
-					pagesInMemory.remove(removed);
+					int removedPage = memory.poll();
+					pagesInMemory.remove(removedPage);
 				}
 			}
 
