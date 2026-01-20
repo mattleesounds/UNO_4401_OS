@@ -1,17 +1,14 @@
 /*
-Name: Matthew Lee
-CSCI 4401/5401
+CSCI 4401/5401 - Operating Systems
 Fall 2023
-Extra Credit Assignment
+Extra Credit Assignment - Memory Management, Virtual Memory, File Systems, and Disk Scheduling
 
-Due: Tuesday, 11/28 @ 6:00pm (before we meet for the last lecture)
-
-- This extra credit assignment contains a total of 25 points that can be applied to your final exam grade. Since this is extra credit, no partial credit for problems. 
-- The problems you will solve all have ToDo: notes. 
-- You can create new variables, but you cannot hardcode values. Rather than hardcoding values, use the global variables.
-- The global variables and the arguments passed to the methods are example test values. You code should not be built to work for these specific values. I.e., it should still work if other test values were used. 
-- Do not modify the current print statements. If you add print statements for testing & debugging, please remove them before submitting.
-- Submit: this modified file containing your solutions.
+This assignment demonstrates implementations of:
+- Main memory allocation algorithms (First-Fit, Best-Fit, Worst-Fit)
+- Paging and address mapping
+- Virtual memory page replacement (FIFO, LRU)
+- File system i-node calculations
+- Disk scheduling algorithms (FCFS, SCAN, LOOK, SSTF)
 */
 
 import java.util.*;
