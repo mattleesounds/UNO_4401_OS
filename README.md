@@ -178,7 +178,7 @@ java HW5
 
 **Course**: CSCI 4401/5401 - Operating Systems
 **Semester**: Fall 2023
-**Institution**: University of Nebraska Omaha (UNO)
+**Institution**: University of New Orleans (UNO)
 
 ## License
 
